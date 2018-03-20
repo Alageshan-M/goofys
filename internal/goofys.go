@@ -141,19 +141,23 @@ func NewGoofys(ctx context.Context, bucket string, awsConfig *aws.Config, flags 
 	var err error
 	if !fs.flags.RegionSet {
 		err, isAws = fs.detectBucketLocationByHEAD()
+		log.Errorf("Unable to access dummy '%v': %v", fs.bucket, err)
 		if err == nil {
 			// we detected a region header, this is probably AWS S3,
 			// or we can use anonymous access, or both
+			log.Errorf("loop 1")
 			fs.sess = session.New(awsConfig)
 			fs.s3 = fs.newS3()
 		} else if err == fuse.ENOENT {
+			log.Errorf("loop 2")
 			log.Errorf("bucket %v does not exist", fs.bucket)
 			return nil
 		} else {
 			// this is NOT AWS, we expect the request to fail with 403 if this is not
 			// an anonymous bucket
 			if err != syscall.EACCES {
-				log.Errorf("Unable to access '%v': %v", fs.bucket, err)
+				log.Errorf("loop 3")
+				log.Errorf("Unable to access first '%v': %v", fs.bucket, err)
 			}
 		}
 	}
