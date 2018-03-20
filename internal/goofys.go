@@ -163,7 +163,7 @@ func NewGoofys(ctx context.Context, bucket string, awsConfig *aws.Config, flags 
 	}
 
 	// try again with the credential to make sure
-	err = mapAwsError(fs.testBucket())
+	//err = mapAwsError(fs.testBucket())
 	log.Errorf("in loop 4  %v",  err)
 
 	if err != nil {
