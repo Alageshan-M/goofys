@@ -164,8 +164,12 @@ func NewGoofys(ctx context.Context, bucket string, awsConfig *aws.Config, flags 
 
 	// try again with the credential to make sure
 	err = mapAwsError(fs.testBucket())
+	log.Errorf("in loop 4  %v",  err)
+
 	if err != nil {
+		log.Errorf("in loop 4 a")
 		if !isAws {
+			log.Errorf("in loop 4 b")
 			// EMC returns 403 because it doesn't support v4 signing
 			// swift3, ceph-s3 returns 400
 			// Amplidata just gives up and return 500
@@ -176,6 +180,7 @@ func NewGoofys(ctx context.Context, bucket string, awsConfig *aws.Config, flags 
 		}
 
 		if err != nil {
+			log.Errorf("in loop 4 c")
 			log.Errorf("Unable to access '%v': %v", fs.bucket, err)
 			return nil
 		}
