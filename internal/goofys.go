@@ -148,6 +148,7 @@ func NewGoofys(ctx context.Context, bucket string, awsConfig *aws.Config, flags 
 			log.Errorf("loop 1")
 			fs.sess = session.New(awsConfig)
 			fs.s3 = fs.newS3()
+			log.Errorf("Unable to access dummy---2 '%v': %v", fs.bucket, err)
 		} else if err == fuse.ENOENT {
 			log.Errorf("loop 2")
 			log.Errorf("bucket %v does not exist", fs.bucket)
@@ -284,9 +285,10 @@ func RandStringBytesMaskImprSrc(n int) string {
 
 func (fs *Goofys) testBucket() (err error) {
 	randomObjectName := fs.key(RandStringBytesMaskImprSrc(32))
-
-	_, err = fs.s3.HeadObject(&s3.HeadObjectInput{Bucket: &fs.bucket, Key: randomObjectName})
-	s3Log.Debugf("inside testBucket %v:", err)
+	log.Errorf("bucket:%v, Key:%v", &fs.bucket,randomObjectName )
+	a_
+	_, err = fs.s3.HeadObject(&s3.HeadObjectInput{Bucket: &fs.bucket, Key:randomObjectName })
+	log.Errorf("Unable to access dummy '%v': %v:%v", Bucket,Key , err)
 	if err != nil {
 		err = mapAwsError(err)
 		if err == fuse.ENOENT {
