@@ -285,10 +285,9 @@ func RandStringBytesMaskImprSrc(n int) string {
 
 func (fs *Goofys) testBucket() (err error) {
 	randomObjectName := fs.key(RandStringBytesMaskImprSrc(32))
-	log.Errorf("bucket:%v, Key:%v", &fs.bucket,randomObjectName )
-	a_
+	log.Errorf("bucket:%v:%v, Key:%v", &fs.bucket,fs.bucket,randomObjectName )
 	_, err = fs.s3.HeadObject(&s3.HeadObjectInput{Bucket: &fs.bucket, Key:randomObjectName })
-	log.Errorf("Unable to access dummy '%v': %v:%v", Bucket,Key , err)
+	log.Errorf("Unable to access dummy---3 '%v", err)
 	if err != nil {
 		err = mapAwsError(err)
 		if err == fuse.ENOENT {
