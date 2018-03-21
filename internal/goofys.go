@@ -163,7 +163,7 @@ func NewGoofys(ctx context.Context, bucket string, awsConfig *aws.Config, flags 
 	}
 
 	// try again with the credential to make sure
-	//err = mapAwsError(fs.testBucket())
+	err = mapAwsError(fs.testBucket())
 	log.Errorf("in loop 4  %v",  err)
 
 	if err != nil {
@@ -286,6 +286,7 @@ func (fs *Goofys) testBucket() (err error) {
 	randomObjectName := fs.key(RandStringBytesMaskImprSrc(32))
 
 	_, err = fs.s3.HeadObject(&s3.HeadObjectInput{Bucket: &fs.bucket, Key: randomObjectName})
+	s3Log.Debugf("inside testBucket %v:", err)
 	if err != nil {
 		err = mapAwsError(err)
 		if err == fuse.ENOENT {
